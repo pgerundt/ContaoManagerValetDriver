@@ -1,4 +1,8 @@
 <?php
+namespace Valet\Drivers;
+
+use Valet\Drivers\ValetDriver;
+
 class ContaoManagerValetDriver extends ValetDriver
 {
 
@@ -17,7 +21,7 @@ class ContaoManagerValetDriver extends ValetDriver
      * @param  string  $uri
      * @return bool
      */
-    public function serves($sitePath, $siteName, $uri)
+    public function serves($sitePath, $siteName, $uri): bool
     {
         if (file_exists($sitePath.'/public/contao-manager.phar.php')) {
             $this->docRootPath = '/public';
@@ -36,7 +40,7 @@ class ContaoManagerValetDriver extends ValetDriver
      * @param  string  $uri
      * @return string|false
      */
-    public function isStaticFile($sitePath, $siteName, $uri)
+    public function isStaticFile($sitePath, $siteName, $uri)/*: string|false */
     {
         if ($this->isActualFile($staticFilePath = $sitePath.'/web/'.$uri)) {
             return $staticFilePath;
@@ -55,7 +59,7 @@ class ContaoManagerValetDriver extends ValetDriver
      * @param  string  $uri
      * @return string
      */
-    public function frontControllerPath($sitePath, $siteName, $uri)
+    public function frontControllerPath($sitePath, $siteName, $uri): string
     {
         if (preg_match('/(^\/(contao-manager\.phar|preview)\.php)/', $uri, $match) === 1) {
             $frontControllerPath = $sitePath.$this->docRootPath.$match[1];
